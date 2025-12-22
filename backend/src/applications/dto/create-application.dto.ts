@@ -1,4 +1,5 @@
 import { IsEnum, IsOptional, IsString, IsUrl } from 'class-validator';
+import { ApplicationStatus } from '../../common/enums/application-status.enum';
 
 export class CreateApplicationDto {
   @IsString()
@@ -8,8 +9,8 @@ export class CreateApplicationDto {
   role: string;
 
   @IsOptional()
-  @IsEnum(['applied', 'interview', 'offer', 'rejected'])
-  status?: 'applied' | 'interview' | 'offer' | 'rejected';
+  @IsEnum(ApplicationStatus)
+  status?: ApplicationStatus;
 
   @IsOptional()
   @IsUrl()
@@ -19,4 +20,5 @@ export class CreateApplicationDto {
   @IsString()
   notes?: string;
 }
+
 
