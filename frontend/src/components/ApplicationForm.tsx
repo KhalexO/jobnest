@@ -1,40 +1,40 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { createApplication, ApplicationStatus } from '@/services/applications.service';
+import { createApplication } from '@/services/applications.service';
+import { Application, ApplicationStatus } from '@/types/application';
 
-export function ApplicationForm() {
-  const router = useRouter();
-
+export function ApplicationForm({
+  onCreated,
+}: {
+  onCreated: (app: Application) => void;
+}) {
   const [company, setCompany] = useState('');
   const [role, setRole] = useState('');
   const [status, setStatus] = useState<ApplicationStatus>('applied');
   const [notes, setNotes] = useState('');
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setError(null);
     setLoading(true);
 
     try {
-      await createApplication({
+      const created = await createApplication({
         company,
         role,
         status,
         notes: notes || undefined,
       });
 
+      onCreated(created); // 🔑 atualiza estado global
+
       setCompany('');
       setRole('');
       setStatus('applied');
       setNotes('');
-
-      router.refresh(); // 🔑 atualiza a lista
-    } catch (err: any) {
-      setError(err.message || 'Erro ao criar candidatura');
+    } catch {
+      alert('Erro ao criar candidatura');
     } finally {
       setLoading(false);
     }
@@ -43,14 +43,12 @@ export function ApplicationForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="mb-6 rounded-lg border bg-white p-4 shadow-sm space-y-4"
+      className="space-y-4 rounded-lg border p-6"
     >
       <h2 className="text-lg font-semibold">Nova candidatura</h2>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
-
       <input
-        className="w-full rounded border p-2"
+        className="w-full rounded border px-3 py-2"
         placeholder="Empresa"
         value={company}
         onChange={(e) => setCompany(e.target.value)}
@@ -58,7 +56,7 @@ export function ApplicationForm() {
       />
 
       <input
-        className="w-full rounded border p-2"
+        className="w-full rounded border px-3 py-2"
         placeholder="Cargo"
         value={role}
         onChange={(e) => setRole(e.target.value)}
@@ -66,7 +64,7 @@ export function ApplicationForm() {
       />
 
       <select
-        className="w-full rounded border p-2"
+        className="w-full rounded border px-2 py-1"
         value={status}
         onChange={(e) => setStatus(e.target.value as ApplicationStatus)}
       >
@@ -77,8 +75,8 @@ export function ApplicationForm() {
       </select>
 
       <textarea
-        className="w-full rounded border p-2"
-        placeholder="Notas (opcional)"
+        className="w-full rounded border px-3 py-2"
+        placeholder="Notas"
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
       />
@@ -86,10 +84,14 @@ export function ApplicationForm() {
       <button
         type="submit"
         disabled={loading}
-        className="rounded bg-black px-4 py-2 text-white hover:bg-gray-800 disabled:opacity-50"
+        className="rounded bg-black px-4 py-2 text-white"
       >
-        {loading ? 'A criar...' : 'Criar candidatura'}
+        {loading ? 'A criar…' : 'Criar candidatura'}
       </button>
     </form>
   );
 }
+
+
+
+
