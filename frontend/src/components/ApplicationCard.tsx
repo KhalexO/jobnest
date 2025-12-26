@@ -9,30 +9,25 @@ import {
 
 export function ApplicationCard({
   application,
-  onDelete,
   onUpdate,
+  onDelete,
 }: {
   application: Application;
-  onDelete: (id: string) => void;
   onUpdate: (app: Application) => void;
+  onDelete: (id: string) => void;
 }) {
-  const [status, setStatus] = useState<ApplicationStatus>(application.status);
   const [loading, setLoading] = useState(false);
 
   async function handleChange(newStatus: ApplicationStatus) {
-    if (newStatus === status) return;
+    if (newStatus === application.status) return;
 
     try {
       setLoading(true);
-      setStatus(newStatus);
-
       const updated = await updateApplication(application.id, {
         status: newStatus,
       });
-
       onUpdate(updated);
     } catch {
-      setStatus(application.status);
       alert('Erro ao atualizar estado');
     } finally {
       setLoading(false);
@@ -40,8 +35,7 @@ export function ApplicationCard({
   }
 
   async function handleDelete() {
-    const ok = confirm('Tens a certeza que queres apagar?');
-    if (!ok) return;
+    if (!confirm('Apagar candidatura?')) return;
 
     try {
       await deleteApplication(application.id);
@@ -54,13 +48,13 @@ export function ApplicationCard({
   return (
     <div className="flex items-center justify-between rounded-lg border p-4">
       <div>
-        <h2 className="text-lg font-semibold">{application.company}</h2>
+        <h2 className="font-semibold">{application.company}</h2>
         <p className="text-sm opacity-70">{application.role}</p>
       </div>
 
       <div className="flex gap-2">
         <select
-          value={status}
+          value={application.status}
           disabled={loading}
           onChange={(e) =>
             handleChange(e.target.value as ApplicationStatus)
@@ -83,6 +77,7 @@ export function ApplicationCard({
     </div>
   );
 }
+
 
 
 

@@ -27,7 +27,7 @@ export function ApplicationForm({
         notes: notes || undefined,
       });
 
-      onCreated(created); // 🔑 atualiza estado global
+      onCreated(created);
 
       setCompany('');
       setRole('');
