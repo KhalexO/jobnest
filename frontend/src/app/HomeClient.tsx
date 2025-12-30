@@ -153,16 +153,16 @@ function Stat({
   onClick: () => void;
 }) {
   const base =
-    'rounded-lg border px-4 py-2 text-sm transition flex flex-col items-start';
+    'rounded-lg border border-[var(--border)] px-4 py-2 text-sm transition flex flex-col items-start';
 
-  const activeStyle = 'ring-2 ring-black dark:ring-white';
+  const activeStyle = 'ring-2 ring-[var(--fg)]';
 
   const styles: Record<string, string> = {
-    all: 'bg-gray-100 dark:bg-gray-800',
-    applied: 'bg-gray-200 dark:bg-gray-700',
-    interview: 'bg-blue-200 dark:bg-blue-700',
-    offer: 'bg-green-200 dark:bg-green-700',
-    rejected: 'bg-red-200 dark:bg-red-700',
+    all: 'bg-[var(--status-all)]',
+    applied: 'bg-[var(--status-applied)]',
+    interview: 'bg-[var(--status-interview)]',
+    offer: 'bg-[var(--status-offer)]',
+    rejected: 'bg-[var(--status-rejected)]',
   };
 
   return (
@@ -172,11 +172,14 @@ function Stat({
         active ? activeStyle : 'hover:opacity-90'
       }`}
     >
-      <span className="text-xs opacity-70 capitalize">{label}</span>
+      <span className="text-xs text-[var(--muted)] capitalize">
+        {label}
+      </span>
       <span className="text-lg font-bold">{value}</span>
     </button>
   );
 }
+
 
 
 

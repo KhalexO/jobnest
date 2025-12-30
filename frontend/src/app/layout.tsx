@@ -17,9 +17,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="h-screen overflow-hidden">
-        <header className="flex justify-end border-b p-4">
+    <html lang="en" suppressHydrationWarning>
+      <body className="h-screen overflow-hidden bg-[var(--bg)] text-[var(--fg)]">
+        <header className="flex justify-end border-b border-[var(--border)] p-4">
           <ThemeToggle />
         </header>
 
@@ -30,6 +30,10 @@ export default function RootLayout({
     </html>
   );
 }
+
+
+
+
 
 
 

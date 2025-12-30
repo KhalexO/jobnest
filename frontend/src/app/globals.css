@@ -2,23 +2,43 @@
 
 :root {
   --bg: #ffffff;
-  --fg: #171717;
+  --fg: #111827;
+
   --card: #ffffff;
   --border: #e5e7eb;
+
+  --muted: #6b7280;
+
+  --status-all: #ffffff;
+  --status-applied: #e5e7eb;
+  --status-interview: #bfdbfe;
+  --status-offer: #bbf7d0;
+  --status-rejected: #fecaca;
 }
 
 .dark {
   --bg: #0b0b0b;
-  --fg: #ededed;
+  --fg: #f9fafb;
+
   --card: #111827;
   --border: #1f2937;
+
+  --muted: #9ca3af;
+
+  --status-all: #111827;
+  --status-applied: #374151;
+  --status-interview: #1d4ed8;
+  --status-offer: #15803d;
+  --status-rejected: #b91c1c;
 }
 
 body {
   background-color: var(--bg);
   color: var(--fg);
-  font-family: ui-sans-serif, system-ui, sans-serif;
 }
+
+
+
 
 
 

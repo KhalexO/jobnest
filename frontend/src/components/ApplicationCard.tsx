@@ -36,9 +36,6 @@ export function ApplicationCard({
 
       onUpdate(updated);
       flashSaved();
-    } catch {
-      alert('Failed to update status');
-      setSaveState('idle');
     } finally {
       setLoading(false);
     }
@@ -60,10 +57,6 @@ export function ApplicationCard({
 
       onUpdate(updated);
       flashSaved();
-    } catch {
-      alert('Failed to save notes');
-      setNotes(application.notes ?? '');
-      setSaveState('idle');
     } finally {
       setEditingNotes(false);
       setLoading(false);
@@ -79,19 +72,17 @@ export function ApplicationCard({
     const ok = confirm(
       'This action is permanent.\n\nOnce deleted, this application cannot be recovered.\n\nDo you want to continue?'
     );
-
     if (!ok) return;
 
-    try {
-      await deleteApplication(application.id);
-      onDelete(application.id);
-    } catch {
-      alert('Failed to delete application');
-    }
+    await deleteApplication(application.id);
+    onDelete(application.id);
   }
 
+  const field =
+    'rounded border border-[var(--border)] bg-[var(--bg)] text-[var(--fg)] px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--fg)]';
+
   return (
-    <div className="rounded-lg border p-4 space-y-2">
+    <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-4 space-y-2">
       <div className="flex items-start justify-between gap-4">
         <div>
           <h2 className="font-semibold">{application.company}</h2>
@@ -105,7 +96,7 @@ export function ApplicationCard({
             onChange={(e) =>
               handleStatusChange(e.target.value as ApplicationStatus)
             }
-            className="rounded border px-2 py-1 text-sm disabled:opacity-60"
+            className={field}
           >
             <option value="applied">applied</option>
             <option value="interview">interview</option>
@@ -116,7 +107,7 @@ export function ApplicationCard({
           <button
             onClick={handleDelete}
             disabled={loading}
-            className="rounded border px-2 py-1 text-sm text-red-600 hover:bg-red-50 disabled:opacity-50"
+            className="rounded border border-red-500 px-2 py-1 text-sm text-red-500 hover:bg-red-500 hover:text-white disabled:opacity-50"
           >
             Delete
           </button>
@@ -130,18 +121,7 @@ export function ApplicationCard({
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             onBlur={saveNotes}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                saveNotes();
-              }
-              if (e.key === 'Escape') {
-                setNotes(application.notes ?? '');
-                setEditingNotes(false);
-              }
-            }}
-            placeholder="Add notes…"
-            className="w-full rounded border px-2 py-1 text-sm"
+            className="w-full rounded border border-[var(--border)] bg-[var(--bg)] text-[var(--fg)] px-2 py-1 text-sm"
             rows={2}
           />
         ) : (
@@ -163,6 +143,7 @@ export function ApplicationCard({
     </div>
   );
 }
+
 
 
 

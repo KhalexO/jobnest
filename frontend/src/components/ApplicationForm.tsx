@@ -33,22 +33,20 @@ export function ApplicationForm({
       setRole('');
       setStatus('applied');
       setNotes('');
-    } catch {
-      alert('Error creating application');
     } finally {
       setLoading(false);
     }
   }
 
+  const field =
+    'w-full rounded border border-[var(--border)] bg-[var(--bg)] text-[var(--fg)] px-3 py-2';
+
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="space-y-4 rounded-lg border p-6"
-    >
+    <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-[var(--border)] bg-[var(--card)] p-6">
       <h2 className="text-lg font-semibold">New application</h2>
 
       <input
-        className="w-full rounded border px-3 py-2"
+        className={field}
         placeholder="Company"
         value={company}
         onChange={(e) => setCompany(e.target.value)}
@@ -56,7 +54,7 @@ export function ApplicationForm({
       />
 
       <input
-        className="w-full rounded border px-3 py-2"
+        className={field}
         placeholder="Position"
         value={role}
         onChange={(e) => setRole(e.target.value)}
@@ -64,7 +62,7 @@ export function ApplicationForm({
       />
 
       <select
-        className="w-full rounded border px-2 py-1"
+        className={field}
         value={status}
         onChange={(e) => setStatus(e.target.value as ApplicationStatus)}
       >
@@ -75,7 +73,7 @@ export function ApplicationForm({
       </select>
 
       <textarea
-        className="w-full rounded border px-3 py-2"
+        className={field}
         placeholder="Notes"
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
@@ -84,13 +82,14 @@ export function ApplicationForm({
       <button
         type="submit"
         disabled={loading}
-        className="rounded bg-black px-4 py-2 text-white"
+        className="rounded bg-[var(--fg)] px-4 py-2 text-[var(--bg)]"
       >
         {loading ? 'Creating…' : 'Create application'}
       </button>
     </form>
   );
 }
+
 
 
 
