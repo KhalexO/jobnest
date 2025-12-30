@@ -34,7 +34,7 @@ export function ApplicationForm({
       setStatus('applied');
       setNotes('');
     } catch {
-      alert('Erro ao criar candidatura');
+      alert('Error creating application');
     } finally {
       setLoading(false);
     }
@@ -45,11 +45,11 @@ export function ApplicationForm({
       onSubmit={handleSubmit}
       className="space-y-4 rounded-lg border p-6"
     >
-      <h2 className="text-lg font-semibold">Nova candidatura</h2>
+      <h2 className="text-lg font-semibold">New application</h2>
 
       <input
         className="w-full rounded border px-3 py-2"
-        placeholder="Empresa"
+        placeholder="Company"
         value={company}
         onChange={(e) => setCompany(e.target.value)}
         required
@@ -57,7 +57,7 @@ export function ApplicationForm({
 
       <input
         className="w-full rounded border px-3 py-2"
-        placeholder="Cargo"
+        placeholder="Position"
         value={role}
         onChange={(e) => setRole(e.target.value)}
         required
@@ -76,7 +76,7 @@ export function ApplicationForm({
 
       <textarea
         className="w-full rounded border px-3 py-2"
-        placeholder="Notas"
+        placeholder="Notes"
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
       />
@@ -86,11 +86,12 @@ export function ApplicationForm({
         disabled={loading}
         className="rounded bg-black px-4 py-2 text-white"
       >
-        {loading ? 'A criar…' : 'Criar candidatura'}
+        {loading ? 'Creating…' : 'Create application'}
       </button>
     </form>
   );
 }
+
 
 
 
